@@ -115,4 +115,5 @@ class Graph(object):
         path.append(start_node)
 
         print("We found the following best path with a value of {}.".format(shortest_path[target_node]))
-        print(" -> ".join(reversed(path)))
+        path.reverse()
+        return path

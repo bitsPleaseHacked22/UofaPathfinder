@@ -21,7 +21,10 @@ class MainDialog(QDialog):
         self.xCords = []
         self.yCords = []
         self.buildingsDict = dict()
+        self.buildingsDictInverse = dict()
         self.buildingNamesPathFinding = []
+        self.currentPath = None
+        self.clickedObject = None
         with open('./assets/buildingDetails.csv') as csvFile:
             csvReader = csv.reader(csvFile, delimiter=',')
             count = 0
@@ -36,11 +39,23 @@ class MainDialog(QDialog):
                 self.xCords.append(float(row[1]))
                 self.yCords.append(float(row[2]))
                 self.buildingsDict[row[1]+row[2]] = row[0]
+                self.buildingsDictInverse[row[0]] = row[1] + row[2]
                 count +=1
         print("xcords", self.xCords)
-        self.pointsObjects = self.ui.UofaMap.plot(self.xCords, self.yCords, pen=None, symbol = 'o', symbolBrush= (0,255,0))
+        self.pointsObjects = self.ui.UofaMap.plot(self.xCords, self.yCords, pen=None, symbol = 'o', symbolBrush= (255,0,0))
         self.pointsObjects.sigPointsClicked.connect(self.addBuildingName)
+    
     def addBuildingName(self, event, point):
+        if self.clickedObject != None:
+            self.ui.UofaMap.removeItem(self.clickedObject)
+            self.clickedObject = None
+        p_ellipse = pg.QtGui.QGraphicsEllipseItem(point[0].pos().x() - 10, point[0].pos().y() - 10, 25, 25)  # x, y, width, height
+        p_ellipse.setPen(pg.mkPen((0, 0, 0, 255)))
+        p_ellipse.setBrush(pg.mkBrush((0, 0, 255)))
+        self.ui.UofaMap.addItem(p_ellipse)
+        self.clickedObject = p_ellipse
+        if self.currentPath != None:
+            self.ui.UofaMap.removeItem(self.currentPath)
         x = point[0].pos().x()
         y = point[0].pos().y()
         key = str(int(x)) + str(int(y))
@@ -50,7 +65,14 @@ class MainDialog(QDialog):
         if len(self.buildingNamesPathFinding) == 2:
             # call pathfinding algorithm here
             graph = Graph()
-            graph.print_result(self.buildingNamesPathFinding[0], self.buildingNamesPathFinding[1])
+            result = graph.print_result(self.buildingNamesPathFinding[0], self.buildingNamesPathFinding[1])
+            xCoords = []
+            yCoords = []
+            for ele in result:
+                coords = self.buildingsDictInverse[ele]
+                xCoords.append(int(coords[:3]))
+                yCoords.append(int(coords[3:]))
+            self.currentPath = self.ui.UofaMap.plot(xCoords, yCoords, pen=pg.mkPen('r', width=3), symbolBrush=(0,0,255))
             self.buildingNamesPathFinding.clear()
             
 
