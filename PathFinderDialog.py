@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file './PathFinderDialog.ui'
+# Form implementation generated from reading ui file 'PathFinderDialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.4
 #
@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_PathfinderDialog(object):
     def setupUi(self, PathfinderDialog):
         PathfinderDialog.setObjectName("PathfinderDialog")
-        PathfinderDialog.resize(983, 797)
+        PathfinderDialog.resize(957, 809)
         self.gridLayout_2 = QtWidgets.QGridLayout(PathfinderDialog)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.UofaMap = PlotWidget(PathfinderDialog)
@@ -22,11 +22,6 @@ class Ui_PathfinderDialog(object):
         self.gridLayout_2.addWidget(self.UofaMap, 0, 0, 1, 1)
         self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
-        self.textEdit = QtWidgets.QTextEdit(PathfinderDialog)
-        self.textEdit.setObjectName("textEdit")
-        self.verticalLayout.addWidget(self.textEdit, 0, QtCore.Qt.AlignRight)
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout.addItem(spacerItem)
         self.gridLayout_2.addLayout(self.verticalLayout, 0, 1, 1, 1)
 
         self.retranslateUi(PathfinderDialog)

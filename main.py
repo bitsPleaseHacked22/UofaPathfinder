@@ -32,7 +32,6 @@ class MainDialog(QDialog):
                 if count == 0:
                     count +=1
                     continue
-                print("row1",row[1])
                 text = pg.TextItem(row[0], color=(255,0,0), fill=(255,255,255))
                 text.setPos(float(row[1]), float(row[2])+10)
                 self.ui.UofaMap.addItem(text)
@@ -41,7 +40,6 @@ class MainDialog(QDialog):
                 self.buildingsDict[row[1]+row[2]] = row[0]
                 self.buildingsDictInverse[row[0]] = row[1] + row[2]
                 count +=1
-        print("xcords", self.xCords)
         self.pointsObjects = self.ui.UofaMap.plot(self.xCords, self.yCords, pen=None, symbol = 'o', symbolBrush= (255,0,0))
         self.pointsObjects.sigPointsClicked.connect(self.addBuildingName)
     
@@ -59,8 +57,6 @@ class MainDialog(QDialog):
         x = point[0].pos().x()
         y = point[0].pos().y()
         key = str(int(x)) + str(int(y))
-        print(key)
-        print('testing: ',self.buildingsDict[key])
         self.buildingNamesPathFinding.append(self.buildingsDict[key])
         if len(self.buildingNamesPathFinding) == 2:
             # call pathfinding algorithm here
