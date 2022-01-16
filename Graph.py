@@ -1,10 +1,28 @@
 import sys
+import numpy as np
 
 
 class Graph(object):
-    def __init__(self, nodes, init_graph):
+    def __init__(self):
+        nodes = np.loadtxt("nodes.csv", dtype=str, delimiter=',');
+        matrix = np.genfromtxt("AM.csv", delimiter=',', filling_values=1000);
+
+        init_graph = {}
+        for node in nodes:
+            init_graph[node] = {}
+
+        for i in range(len(nodes)):
+            for j in range(len(nodes)):
+                if matrix[i][j] != 1000:
+                    init_graph[nodes[i]][nodes[j]] = matrix[i][j]
+
+
+        
+
         self.nodes = nodes
         self.graph = self.construct_graph(nodes, init_graph)
+
+        
 
     def construct_graph(self, nodes, init_graph):
         '''
@@ -78,6 +96,7 @@ class Graph(object):
             unvisited_nodes.remove(current_min_node)
 
         return previous_nodes, shortest_path
+
 
     def print_result(self, previous_nodes, shortest_path, start_node, target_node):
         path = []
