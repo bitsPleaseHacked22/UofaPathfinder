@@ -20,6 +20,7 @@ class MainDialog(QDialog):
         self.xCords = []
         self.yCords = []
         self.buildingsDict = dict()
+        self.buildingNamesPathFinding = []
         with open('./assets/buildingDetails.csv') as csvFile:
             csvReader = csv.reader(csvFile, delimiter=',')
             count = 0
@@ -38,12 +39,18 @@ class MainDialog(QDialog):
         print("xcords", self.xCords)
         self.pointsObjects = self.ui.UofaMap.plot(self.xCords, self.yCords, pen=None, symbol = 'o', symbolBrush= (0,255,0))
         self.pointsObjects.sigPointsClicked.connect(self.displayBuildingName)
-    def displayBuildingName(self, event, point):
+    def addBuildingName(self, event, point):
         x = point[0].pos().x()
         y = point[0].pos().y()
         key = str(int(x)) + str(int(y))
         print(key)
         print('testing: ',self.buildingsDict[key])
+        self.buildingNamesPathFinding.append(self.buildingsDict[key])
+        if len(self.buildingNamesPathFinding == 2):
+            # call pathfinding algorithm here
+            self.buildingNamesPathFinding.clear()
+            
+
 
 
 def main():
