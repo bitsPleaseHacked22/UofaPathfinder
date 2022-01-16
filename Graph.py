@@ -4,8 +4,8 @@ import numpy as np
 
 class Graph(object):
     def __init__(self):
-        nodes = np.loadtxt("nodes.csv", dtype=str, delimiter=',');
-        matrix = np.genfromtxt("AM.csv", delimiter=',', filling_values=1000);
+        nodes = np.loadtxt("assets/nodes.csv", dtype=str, delimiter=',')
+        matrix = np.genfromtxt("assets/AM.csv", delimiter=',', filling_values=1000)
 
         init_graph = {}
         for node in nodes:
@@ -38,6 +38,8 @@ class Graph(object):
             for adjacent_node, value in edges.items():
                 if graph[adjacent_node].get(node, False) == False:
                     graph[adjacent_node][node] = value
+
+        print(graph.keys())
 
         return graph
 
@@ -98,9 +100,12 @@ class Graph(object):
         return previous_nodes, shortest_path
 
 
-    def print_result(self, previous_nodes, shortest_path, start_node, target_node):
+    def print_result(self,start_node, target_node):
         path = []
         node = target_node
+
+        previous_nodes, shortest_path = self.dijkstra_algorithm(start_node)
+
 
         while node != start_node:
             path.append(node)
