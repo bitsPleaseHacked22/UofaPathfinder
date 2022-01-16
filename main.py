@@ -5,6 +5,7 @@ import cv2 as cv
 import sys
 import csv
 import numpy as np
+from Graph import Graph
 
 class MainDialog(QDialog):
     def __init__(self, parent=None):
@@ -38,7 +39,7 @@ class MainDialog(QDialog):
                 count +=1
         print("xcords", self.xCords)
         self.pointsObjects = self.ui.UofaMap.plot(self.xCords, self.yCords, pen=None, symbol = 'o', symbolBrush= (0,255,0))
-        self.pointsObjects.sigPointsClicked.connect(self.displayBuildingName)
+        self.pointsObjects.sigPointsClicked.connect(self.addBuildingName)
     def addBuildingName(self, event, point):
         x = point[0].pos().x()
         y = point[0].pos().y()
@@ -46,8 +47,10 @@ class MainDialog(QDialog):
         print(key)
         print('testing: ',self.buildingsDict[key])
         self.buildingNamesPathFinding.append(self.buildingsDict[key])
-        if len(self.buildingNamesPathFinding == 2):
+        if len(self.buildingNamesPathFinding) == 2:
             # call pathfinding algorithm here
+            graph = Graph()
+            graph.print_result(self.buildingNamesPathFinding[0], self.buildingNamesPathFinding[1])
             self.buildingNamesPathFinding.clear()
             
 
