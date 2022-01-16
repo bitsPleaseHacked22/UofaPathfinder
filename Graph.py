@@ -4,8 +4,8 @@ import numpy as np
 
 class Graph(object):
     def __init__(self):
-        nodes = np.loadtxt("nodes.csv", dtype=str, delimiter=',');
-        matrix = np.genfromtxt("AM.csv", delimiter=',', filling_values=1000);
+        nodes = np.loadtxt("./assets/nodes.csv", dtype=str, delimiter=',')
+        matrix = np.genfromtxt("./assets/AM.csv", delimiter=',', filling_values=1000)
 
         init_graph = {}
         for node in nodes:
