@@ -14,7 +14,10 @@ class Graph(object):
         for i in range(len(nodes)):
             for j in range(len(nodes)):
                 if matrix[i][j] != 1000:
-                    init_graph[nodes[i]][nodes[j]] = matrix[i][j]
+                    if matrix[i][j] !=1:
+                        init_graph[nodes[i]][nodes[j]] = matrix[i][j]*2
+                    else:
+                        init_graph[nodes[i]][nodes[j]] = matrix[i][j]
 
 
         
